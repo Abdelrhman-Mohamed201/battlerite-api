@@ -4,6 +4,7 @@ const bodyParser = require("body-parser")
 const mongoose = require("mongoose")
 
 const newsRouters = require("./routes/news")
+const imagesSchema = require("./routes/images")
 
 mongoose.connect('mongodb://localhost/battlerite')
 mongoose.Promise = global.Promise
@@ -11,6 +12,7 @@ mongoose.Promise = global.Promise
 const app = express()
 
 app.use(morgan("dev"))
+app.use('/uploads', express.static('uploads'))
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
@@ -29,6 +31,7 @@ app.use((req, res, next) => {
 
 // Routes which should handle requests
 app.use('/news', newsRouters)
+app.use('/images', imagesSchema)
 
 // Handle wrong routes
 app.use((req, res, next) => {
