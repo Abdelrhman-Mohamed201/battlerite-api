@@ -11,6 +11,6 @@ const newsSchema = mongoose.Schema({
     subTitle: {type: String, required: true},
     content: {type: String, required: true},
     title: {type: String, required: true},
-})
+},{collection:'news'})
 
 module.exports = mongoose.model('News', newsSchema)

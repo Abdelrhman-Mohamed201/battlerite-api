@@ -3,7 +3,7 @@ const router = express.Router()
 const mongoose = require("mongoose")
 const fs = require('fs')
 
-const multer = require('../config/multer')
+const multer = require('../config/multer').single('img')
 
 require('dotenv').config()
 
@@ -16,7 +16,7 @@ router.get('/', (req, res, next) => {
             const response = {
                 status: 200,
                 count: docs.length,
-                news: docs.map(news => {
+                collection: docs.map(news => {
                     return {
                         _id: news._id,
                         premalink: news.premalink,
@@ -38,11 +38,14 @@ router.get('/', (req, res, next) => {
             res.status(200).json(response)
         })
         .catch(err => {
-            res.status(500).json({error: err})
+            res.status(500).json({
+                status: 500,
+                error: err
+            })
         })
 })
 
-router.post('/', multer.single('img'), (req, res, next) => {
+router.post('/', multer, (req, res, next) => {
     const imageId = mongoose.Types.ObjectId()
     const image = new Images({
         _id: imageId,
@@ -62,7 +65,10 @@ router.post('/', multer.single('img'), (req, res, next) => {
         .then(img => {
             /** Rename the image file **/
             fs.rename(`${image.destination}/${image.originalname}`, image.path, err => {
-                if (err) res.status(500).json({error: err})
+                if (err) res.status(500).json({
+                    status: 500,
+                    error: err
+                })
             })
             /** End:Rename the image file **/
             const news = new News({
@@ -81,7 +87,7 @@ router.post('/', multer.single('img'), (req, res, next) => {
                     const response = {
                         status: 201,
                         message: 'Created news successfully',
-                        news: {
+                        collection: {
                             _id: docs._id,
                             premalink: docs.premalink,
                             subTitle: docs.subTitle,
@@ -100,22 +106,28 @@ router.post('/', multer.single('img'), (req, res, next) => {
                     res.status(201).json(response)
                 })
                 .catch(err => {
-                    res.status(500).json({error: err})
+                    res.status(500).json({
+                        status: 500,
+                        error: err
+                    })
                 })
             /** End:Save news **/
         })
         .catch(err => {
-            res.status(500).json({error: err})
+            res.status(500).json({
+                status: 500,
+                error: err
+            })
         })
     /** End:Save image **/
 })
 
-router.get('/:newsId', (req, res, next) => {
+router.get('/g/:newsId', (req, res, next) => {
     News.findById(req.params.newsId).exec()
         .then(docs => {
             const response = {
                 status: 200,
-                news: {
+                collection: {
                     _id: docs._id,
                     premalink: docs.premalink,
                     subTitle: docs.subTitle,
@@ -137,11 +149,14 @@ router.get('/:newsId', (req, res, next) => {
             res.status(200).json(response)
         })
         .catch(err => {
-            res.status(500).json({error: err})
+            res.status(500).json({
+                status: 500,
+                error: err
+            })
         })
 })
 
-router.patch('/:newsId', (req, res, next) => {
+router.patch('/p/:newsId', (req, res, next) => {
     const id = req.params.newsId
     const updateOps = {updated_at: Date.now()}
 
@@ -163,35 +178,77 @@ router.patch('/:newsId', (req, res, next) => {
             res.status(200).json(reponse)
         })
         .catch(err => {
-            res.status(500).json({error: err})
+            res.status(500).json({
+                status: 500,
+                error: err
+            })
         })
 })
 
-router.delete('/:newsId', (req, res, next) => {
+router.delete('/d/:newsId', (req, res, next) => {
     const id = req.params.newsId;
-    News.remove({_id: id}).exec()
-        .then(docs => {
-            const request = {
-                type: 'GET',
-                url: `${process.env.URL}/news`,
-            }
-            if (!docs.n) {
-                res.status(404).json({
-                    status: 404,
-                    message: 'Not found',
-                    request,
+    News.findById(id).select("imgId").exec()
+        .then(docsImgId => {
+            News.remove({_id: id}).exec()
+                .then(newsDocs => {
+                    const request = {
+                        type: 'GET',
+                        url: `${process.env.URL}/news`,
+                    }
+                    if (!newsDocs.n) {
+                        res.status(404).json({
+                            status: 404,
+                            message: 'Not found',
+                            request,
+                        })
+                    } else {
+                        Images.remove().exec()
+                            .then(imagesDocs => {
+                                if (!imagesDocs.n) {
+                                    res.status(404).json({
+                                        status: 404,
+                                        message: 'Image not found',
+                                        request,
+                                    })
+                                } else {
+                                    /** Remove the image file **/
+                                    console.log(docsImgId)
+                                    fs.unlinkSync(`uploads/news/${docsImgId.imgId}.jpg`, (err) => {
+                                        if (err) res.status(500).json({
+                                            status: 500,
+                                            error: err
+                                        })
+                                    });
+                                    /** End:Remove the image file **/
+                                    res.status(200).json({
+                                        status: 200,
+                                        message: 'News deleted',
+                                        request,
+                                    })
+                                }
+                            })
+                            .catch(err => {
+                                res.status(500).json({
+                                    status: 500,
+                                    error: err
+                                })
+                            })
+                    }
                 })
-            } else {
-                res.status(200).json({
-                    status: 200,
-                    message: 'News deleted',
-                    request,
+                .catch(err => {
+                    res.status(500).json({
+                        status: 500,
+                        error: err
+                    })
                 })
-            }
         })
         .catch(err => {
-            res.status(500).json({error: err})
+            res.status(500).json({
+                status: 500,
+                error: err
+            })
         })
+
 });
 
 module.exports = router

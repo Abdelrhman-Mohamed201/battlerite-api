@@ -13,7 +13,7 @@ router.get('/', (req, res, next) => {
             const response = {
                 status: 200,
                 count: docs.length,
-                images: docs.map(image => {
+                collection: docs.map(image => {
                     return {
                         _id: image._id,
                         originalname: image.originalname,
@@ -28,16 +28,19 @@ router.get('/', (req, res, next) => {
             res.status(200).json(response)
         })
         .catch(err => {
-            res.status(500).json({error: err})
+            res.status(500).json({
+                status: 500,
+                error: err
+            })
         })
 })
 
-router.get('/:imageId', (req, res, next) => {
+router.get('/g/:imageId', (req, res, next) => {
     Images.findById(req.params.imageId).exec()
         .then(docs => {
             const response = {
                 status: 200,
-                images: {
+                collection: {
                     _id: docs._id,
                     fieldname: docs.fieldname,
                     originalname: docs.originalname,
@@ -57,11 +60,14 @@ router.get('/:imageId', (req, res, next) => {
             res.status(200).json(response)
         })
         .catch(err => {
-            res.status(500).json({error: err})
+            res.status(500).json({
+                status: 500,
+                error: err
+            })
         })
 })
 
-router.delete('/:imageId', (req, res, next) => {
+router.delete('/d/:imageId', (req, res, next) => {
     const id = req.params.imageId;
     Images.remove().exec()
         .then(docs => {
@@ -72,13 +78,16 @@ router.delete('/:imageId', (req, res, next) => {
             if (!docs.n) {
                 res.status(404).json({
                     status: 404,
-                    message: 'Not found',
+                    message: 'Image not found',
                     request,
                 })
             } else {
                 /** Remove the image file **/
                 fs.unlinkSync(`uploads/news/${id}.jpg`, (err) => {
-                    if (err) res.status(500).json({error: err})
+                    if (err) res.status(500).json({
+                        status: 500,
+                        error: err
+                    })
                 });
                 /** End:Remove the image file **/
                 res.status(200).json({
@@ -89,8 +98,11 @@ router.delete('/:imageId', (req, res, next) => {
             }
         })
         .catch(err => {
-            res.status(500).json({error: err})
+            res.status(500).json({
+                status: 500,
+                error: err
+            })
         })
-});
+})
 
 module.exports = router
