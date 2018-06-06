@@ -11,6 +11,6 @@ const imagesSchema = mongoose.Schema({
     filename: {type: String, required: true},
     path: {type: String, required: true},
     size: {type: Number, required: true}
-})
+},{collection:'images'})
 
 module.exports = mongoose.model('Images', imagesSchema)
