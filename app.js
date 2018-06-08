@@ -3,6 +3,7 @@ const morgan = require("morgan")
 const bodyParser = require("body-parser")
 const mongoose = require("mongoose")
 
+// const usersRouters = require("./routes/users")
 const newsRouters = require("./routes/news")
 const imagesRouters = require("./routes/images")
 
@@ -30,6 +31,7 @@ app.use((req, res, next) => {
 })
 
 // Routes which should handle requests
+// app.use('/users', usersRouters)
 app.use('/news', newsRouters)
 app.use('/images', imagesRouters)
 
