@@ -1,0 +1,1 @@
+# Battlerite API [![BCH compliance](https://bettercodehub.com/edge/badge/Abdelrhman-Mohamed201/battlerite-api?branch=master)](https://bettercodehub.com/) [![Build Status](https://travis-ci.org/Abdelrhman-Mohamed201/battlerite-api.svg?branch=master)](https://travis-ci.org/Abdelrhman-Mohamed201/battlerite-api)
