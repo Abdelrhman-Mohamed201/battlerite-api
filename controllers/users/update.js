@@ -1,21 +1,21 @@
 require('dotenv').config()
-const News = require("../../models/news")
+const Users = require("../../models/users")
 
 update = (req, res, next) => {
-    const id = req.params.newsId
-    const updateOps = {updated_at: Date.now()}
+    const id = req.params.userId
+    const updateOps = {updatedAt: Date.now()}
 
     for (const ops of req.body) {
         updateOps[ops.propName] = ops.value
     }
 
-    News.update({_id: id}, {$set: updateOps}).exec()
+    Users.update({_id: id}, {$set: updateOps}).exec()
         .then(docs => {
             const reponse = {
-                message: 'News updated',
+                message: 'User updated',
                 request: {
                     type: 'GET',
-                    url: `${process.env.URL}/news/g/${id}`
+                    url: `${process.env.URL}/users/g/${id}`
                 },
                 status: 200
             }

@@ -19,7 +19,7 @@ getbyId = (req, res, next) => {
                     request: {
                         type: 'GET',
                         description: 'Get all images',
-                        url: `${process.env.URL}/images`
+                        url: `${process.env.URL}/images/g`
                     }
                 }
             }

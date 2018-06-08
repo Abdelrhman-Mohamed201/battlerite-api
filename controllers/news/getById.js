@@ -21,7 +21,7 @@ getById = (req, res, next) => {
                     request: {
                         type: 'GET',
                         description: 'Get all news',
-                        url: `${process.env.URL}/news`
+                        url: `${process.env.URL}/news/g`
                     }
                 }
             }

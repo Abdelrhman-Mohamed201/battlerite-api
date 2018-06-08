@@ -22,7 +22,7 @@ all = (req, res, next) => {
                         },
                         request: {
                             type: 'GET',
-                            url: `${process.env.URL}/news/${news._id}`
+                            url: `${process.env.URL}/news/g/${news._id}`
                         }
                     }
                 }),
