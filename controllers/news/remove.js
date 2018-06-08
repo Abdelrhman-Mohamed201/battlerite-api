@@ -11,7 +11,7 @@ remove = (req, res, next) => {
                 .then(newsDocs => {
                     const request = {
                         type: 'GET',
-                        url: `${process.env.URL}/news`,
+                        url: `${process.env.URL}/news/g`,
                     }
                     if (!newsDocs.n) {
                         res.status(404).json({

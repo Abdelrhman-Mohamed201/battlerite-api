@@ -14,7 +14,7 @@ getAll = (req, res, next) => {
                         path: image.path,
                         request: {
                             type: 'GET',
-                            url: `${process.env.URL}/images/${image._id}`
+                            url: `${process.env.URL}/images/g/${image._id}`
                         }
                     }
                 }),

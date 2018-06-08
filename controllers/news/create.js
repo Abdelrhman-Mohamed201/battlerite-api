@@ -59,7 +59,7 @@ create = (req, res, next) => {
                             },
                             request: {
                                 type: 'GET',
-                                url: `${process.env.URL}/news/${docs._id}`
+                                url: `${process.env.URL}/news/g/${docs._id}`
                             }
                         },
                     }
