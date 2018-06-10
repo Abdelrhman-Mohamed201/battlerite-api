@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
 const imagesSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
@@ -11,6 +11,6 @@ const imagesSchema = mongoose.Schema({
     filename: {type: String, required: true},
     path: {type: String, required: true},
     size: {type: Number, required: true}
-},{collection:'images'})
+}, {collection: "images"});
 
-module.exports = mongoose.model('Images', imagesSchema)
+module.exports = mongoose.model("Images", imagesSchema);

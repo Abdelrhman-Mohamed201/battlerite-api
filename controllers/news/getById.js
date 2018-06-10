@@ -1,7 +1,7 @@
-require('dotenv').config()
-const News = require("../../models/news")
+require("dotenv").config();
+const News = require("../../models/news");
 
-getById = (req, res, next) => {
+const getById = (req, res, next) => {
     News.findById(req.params.newsId).exec()
         .then(docs => {
             const response = {
@@ -19,12 +19,12 @@ getById = (req, res, next) => {
                         path: docs.imgPath,
                     },
                     request: {
-                        type: 'GET',
-                        description: 'Get all news',
+                        type: "GET",
+                        description: "Get all news",
                         url: `${process.env.URL}/news/g`
                     }
                 }
-            }
+            };
             res.status(200).json(response)
         })
         .catch(err => {
@@ -33,6 +33,6 @@ getById = (req, res, next) => {
                 error: err
             })
         })
-}
+};
 
-module.exports = getById
+module.exports = getById;

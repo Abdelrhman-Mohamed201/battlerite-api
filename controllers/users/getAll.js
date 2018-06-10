@@ -1,7 +1,7 @@
-require('dotenv').config()
-const Users = require("../../models/users")
+require("dotenv").config();
+const Users = require("../../models/users");
 
-all = (req, res, next) => {
+const all = (req, res, next) => {
     Users.find().exec()
         .then(docs => {
             const response = {
@@ -17,12 +17,12 @@ all = (req, res, next) => {
                         createdAt: user.createdAt,
                         updatedAt: user.updatedAt,
                         request: {
-                            type: 'GET',
+                            type: "GET",
                             url: `${process.env.URL}/users/g/${user._id}`
                         }
                     }
                 }),
-            }
+            };
             res.status(200).json(response)
         })
         .catch(err => {
@@ -31,6 +31,6 @@ all = (req, res, next) => {
                 error: err
             })
         })
-}
+};
 
-module.exports = all
+module.exports = all;

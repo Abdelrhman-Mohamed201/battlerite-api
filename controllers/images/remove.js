@@ -1,15 +1,15 @@
-const fs = require('fs')
-require('dotenv').config()
-const Images = require("../../models/images")
+const fs = require("fs");
+require("dotenv").config();
+const Images = require("../../models/images");
 
-remove = (req, res, next) => {
+const remove = (req, res, next) => {
     const id = req.params.imageId;
     Images.remove().exec()
         .then(docs => {
             const request = {
-                type: 'GET',
+                type: "GET",
                 url: `${process.env.URL}/images/g`,
-            }
+            };
             if (!docs.n) {
                 res.status(404).json({
                     status: 404,
@@ -27,7 +27,7 @@ remove = (req, res, next) => {
                 /** End:Remove the image file **/
                 res.status(200).json({
                     status: 200,
-                    message: 'Image deleted',
+                    message: "Image deleted",
                     request,
                 })
             }
@@ -38,6 +38,6 @@ remove = (req, res, next) => {
                 error: err
             })
         })
-}
+};
 
-module.exports = remove
+module.exports = remove;
