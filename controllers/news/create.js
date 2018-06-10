@@ -5,7 +5,7 @@ require("dotenv").config();
 const News = require("../../models/news")
 const Images = require("../../models/images")
 
-const create = (req, res, next) => {
+module.exports = (req, res) => {
     const imageId = mongoose.Types.ObjectId()
     const image = new Images({
         _id: imageId,
@@ -81,5 +81,3 @@ const create = (req, res, next) => {
         });
     /** End:Save image **/
 };
-
-module.exports = create;

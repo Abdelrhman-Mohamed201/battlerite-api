@@ -1,7 +1,7 @@
 require("dotenv").config();
 const Users = require("../../models/users");
 
-const getById = (req, res, next) => {
+module.exports = (req, res) => {
     Users.findById(req.params.userId).exec()
         .then(docs => {
             const response = {
@@ -30,5 +30,3 @@ const getById = (req, res, next) => {
             })
         })
 };
-
-module.exports = getById;

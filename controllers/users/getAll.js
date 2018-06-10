@@ -1,7 +1,7 @@
 require("dotenv").config();
 const Users = require("../../models/users");
 
-const all = (req, res, next) => {
+module.exports = (req, res) => {
     Users.find().exec()
         .then(docs => {
             const response = {
@@ -32,5 +32,3 @@ const all = (req, res, next) => {
             })
         })
 };
-
-module.exports = all;

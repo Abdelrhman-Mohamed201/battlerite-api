@@ -1,7 +1,7 @@
 require("dotenv").config();
 const News = require("../../models/news");
 
-const getById = (req, res, next) => {
+module.exports = (req, res) => {
     News.findById(req.params.newsId).exec()
         .then(docs => {
             const response = {
@@ -34,5 +34,3 @@ const getById = (req, res, next) => {
             })
         })
 };
-
-module.exports = getById;

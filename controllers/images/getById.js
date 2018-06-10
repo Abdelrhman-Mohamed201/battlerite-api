@@ -1,7 +1,7 @@
 require("dotenv").config();
 const Images = require("../../models/images");
 
-const getbyId = (req, res, next) => {
+module.exports = (req, res) => {
     Images.findById(req.params.imageId).exec()
         .then(docs => {
             const response = {
@@ -32,5 +32,3 @@ const getbyId = (req, res, next) => {
             })
         })
 };
-
-module.exports = getbyId;

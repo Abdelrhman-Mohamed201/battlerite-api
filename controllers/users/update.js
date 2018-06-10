@@ -1,7 +1,7 @@
 require("dotenv").config();
 const Users = require("../../models/users");
 
-const update = (req, res, next) => {
+module.exports = (req, res) => {
     const id = req.params.userId
     const updateOps = {updatedAt: Date.now()};
 
@@ -28,5 +28,3 @@ const update = (req, res, next) => {
             })
         })
 };
-
-module.exports = update;
