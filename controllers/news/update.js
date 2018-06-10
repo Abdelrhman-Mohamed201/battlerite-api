@@ -1,9 +1,9 @@
-require('dotenv').config()
-const News = require("../../models/news")
+require("dotenv").config();
+const News = require("../../models/news");
 
-update = (req, res, next) => {
-    const id = req.params.newsId
-    const updateOps = {updated_at: Date.now()}
+const update = (req, res, next) => {
+    const id = req.params.newsId;
+    const updateOps = {updated_at: Date.now()};
 
     for (const ops of req.body) {
         updateOps[ops.propName] = ops.value
@@ -12,13 +12,13 @@ update = (req, res, next) => {
     News.update({_id: id}, {$set: updateOps}).exec()
         .then(docs => {
             const reponse = {
-                message: 'News updated',
+                message: "News updated",
                 request: {
-                    type: 'GET',
+                    type: "GET",
                     url: `${process.env.URL}/news/g/${id}`
                 },
                 status: 200
-            }
+            };
             res.status(200).json(reponse)
         })
         .catch(err => {
@@ -27,6 +27,6 @@ update = (req, res, next) => {
                 error: err
             })
         })
-}
+};
 
-module.exports = update
+module.exports = update;

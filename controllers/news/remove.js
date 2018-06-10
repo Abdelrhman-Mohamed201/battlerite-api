@@ -1,22 +1,22 @@
-const fs = require('fs')
-require('dotenv').config()
-const News = require("../../models/news")
-const Images = require("../../models/images")
+const fs = require("fs");
+require("dotenv").config();
+const News = require("../../models/news");
+const Images = require("../../models/images");
 
-remove = (req, res, next) => {
+const remove = (req, res, next) => {
     const id = req.params.newsId;
     News.findById(id).select("imgId").exec()
         .then(docsImgId => {
             News.remove({_id: id}).exec()
                 .then(newsDocs => {
                     const request = {
-                        type: 'GET',
+                        type: "GET",
                         url: `${process.env.URL}/news/g`,
-                    }
+                    };
                     if (!newsDocs.n) {
                         res.status(404).json({
                             status: 404,
-                            message: 'Not found',
+                            message: "Not found",
                             request,
                         })
                     } else {
@@ -25,7 +25,7 @@ remove = (req, res, next) => {
                                 if (!imagesDocs.n) {
                                     res.status(404).json({
                                         status: 404,
-                                        message: 'Image not found',
+                                        message: "Image not found",
                                         request,
                                     })
                                 } else {
@@ -39,7 +39,7 @@ remove = (req, res, next) => {
                                     /** End:Remove the image file **/
                                     res.status(200).json({
                                         status: 200,
-                                        message: 'News deleted',
+                                        message: "News deleted",
                                         request,
                                     })
                                 }
@@ -66,6 +66,6 @@ remove = (req, res, next) => {
             })
         })
 
-}
+};
 
-module.exports = remove
+module.exports = remove;

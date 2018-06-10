@@ -1,7 +1,7 @@
-require('dotenv').config()
-const News = require("../../models/news")
+require("dotenv").config();
+const News = require("../../models/news");
 
-all = (req, res, next) => {
+const all = (req, res, next) => {
     News.find().exec()
         .then(docs => {
             const response = {
@@ -21,12 +21,12 @@ all = (req, res, next) => {
                             path: news.imgPath,
                         },
                         request: {
-                            type: 'GET',
+                            type: "GET",
                             url: `${process.env.URL}/news/g/${news._id}`
                         }
                     }
                 }),
-            }
+            };
             res.status(200).json(response)
         })
         .catch(err => {
@@ -35,6 +35,6 @@ all = (req, res, next) => {
                 error: err
             })
         })
-}
+};
 
-module.exports = all
+module.exports = all;

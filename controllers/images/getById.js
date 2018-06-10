@@ -1,7 +1,7 @@
-require('dotenv').config()
-const Images = require("../../models/images")
+require("dotenv").config();
+const Images = require("../../models/images");
 
-getbyId = (req, res, next) => {
+const getbyId = (req, res, next) => {
     Images.findById(req.params.imageId).exec()
         .then(docs => {
             const response = {
@@ -17,12 +17,12 @@ getbyId = (req, res, next) => {
                     path: docs.path,
                     size: docs.size,
                     request: {
-                        type: 'GET',
-                        description: 'Get all images',
+                        type: "GET",
+                        description: "Get all images",
                         url: `${process.env.URL}/images/g`
                     }
                 }
-            }
+            };
             res.status(200).json(response)
         })
         .catch(err => {
@@ -31,6 +31,6 @@ getbyId = (req, res, next) => {
                 error: err
             })
         })
-}
+};
 
-module.exports = getbyId
+module.exports = getbyId;

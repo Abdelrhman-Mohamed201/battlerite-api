@@ -1,7 +1,7 @@
-require('dotenv').config()
-const Users = require("../../models/users")
+require("dotenv").config();
+const Users = require("../../models/users");
 
-getById = (req, res, next) => {
+const getById = (req, res, next) => {
     Users.findById(req.params.userId).exec()
         .then(docs => {
             const response = {
@@ -15,12 +15,12 @@ getById = (req, res, next) => {
                     createdAt: docs.createdAt,
                     updatedAt: docs.updatedAt,
                     request: {
-                        type: 'GET',
-                        description: 'Get all users',
+                        type: "GET",
+                        description: "Get all users",
                         url: `${process.env.URL}/users/g`
                     }
                 }
-            }
+            };
             res.status(200).json(response)
         })
         .catch(err => {
@@ -29,6 +29,6 @@ getById = (req, res, next) => {
                 error: err
             })
         })
-}
+};
 
-module.exports = getById
+module.exports = getById;
