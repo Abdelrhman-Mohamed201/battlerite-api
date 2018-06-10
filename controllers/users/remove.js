@@ -1,7 +1,7 @@
 require("dotenv").config();
 const Users = require("../../models/users");
 
-const remove = (req, res, next) => {
+module.exports = (req, res) => {
     const id = req.params.userId;
     Users.remove({_id: id}).exec()
         .then(docs => {
@@ -31,5 +31,3 @@ const remove = (req, res, next) => {
             })
         })
 };
-
-module.exports = remove;

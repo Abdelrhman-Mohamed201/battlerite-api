@@ -1,7 +1,7 @@
 require("dotenv").config();
 const News = require("../../models/news");
 
-const update = (req, res, next) => {
+module.exports = (req, res) => {
     const id = req.params.newsId;
     const updateOps = {updated_at: Date.now()};
 
@@ -28,5 +28,3 @@ const update = (req, res, next) => {
             })
         })
 };
-
-module.exports = update;

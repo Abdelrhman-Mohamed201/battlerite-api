@@ -3,7 +3,7 @@ require("dotenv").config();
 const Users = require("../../models/users");
 const bcrypt = require("bcrypt");
 
-const signup = (req, res, next) => {
+module.exports = (req, res) => {
     Users.find({email: req.body.email}).exec()
         .then(user => {
             if (user.length >= 1) {
@@ -12,6 +12,8 @@ const signup = (req, res, next) => {
                     message: "This email is exist, please enter another one.",
                 })
             } else {
+
+                // Hashing the password
                 bcrypt.hash(req.body.password, 10, (err, hash) => {
                     if (err) {
                         res.status(500).json({
@@ -67,5 +69,3 @@ const signup = (req, res, next) => {
             })
         })
 };
-
-module.exports = signup;

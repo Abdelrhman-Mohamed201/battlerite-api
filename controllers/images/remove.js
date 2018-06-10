@@ -2,7 +2,7 @@ const fs = require("fs");
 require("dotenv").config();
 const Images = require("../../models/images");
 
-const remove = (req, res, next) => {
+module.exports = (req, res) => {
     const id = req.params.imageId;
     Images.remove().exec()
         .then(docs => {
@@ -39,5 +39,3 @@ const remove = (req, res, next) => {
             })
         })
 };
-
-module.exports = remove;

@@ -1,7 +1,7 @@
 require("dotenv").config();
 const Images = require("../../models/images");
 
-const getAll = (req, res, next) => {
+module.exports = (req, res) => {
     Images.find().exec()
         .then(docs => {
             const response = {
@@ -28,5 +28,3 @@ const getAll = (req, res, next) => {
             })
         })
 };
-
-module.exports = getAll;

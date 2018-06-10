@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const Users = require("../../models/users");
 
-const signin = (req, res, next) => {
+module.exports = (req, res) => {
     Users.findOne({email: req.body.email}).exec()
         .then(user => {
             if (!user) {
@@ -12,6 +12,8 @@ const signin = (req, res, next) => {
                     message: "Please check your email.",
                 })
             } else {
+
+                // Checking the password
                 bcrypt.compare(req.body.password, user.password, (err, result) => {
                     if (result) {
                         const token = jwt.sign({
@@ -34,5 +36,3 @@ const signin = (req, res, next) => {
         })
         .catch()
 };
-
-module.exports = signin;

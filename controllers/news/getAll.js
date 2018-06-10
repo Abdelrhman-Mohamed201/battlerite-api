@@ -1,7 +1,7 @@
 require("dotenv").config();
 const News = require("../../models/news");
 
-const all = (req, res, next) => {
+module.exports = (req, res) => {
     News.find().exec()
         .then(docs => {
             const response = {
@@ -36,5 +36,3 @@ const all = (req, res, next) => {
             })
         })
 };
-
-module.exports = all;

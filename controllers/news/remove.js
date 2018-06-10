@@ -3,7 +3,7 @@ require("dotenv").config();
 const News = require("../../models/news");
 const Images = require("../../models/images");
 
-const remove = (req, res, next) => {
+module.exports = (req, res) => {
     const id = req.params.newsId;
     News.findById(id).select("imgId").exec()
         .then(docsImgId => {
@@ -67,5 +67,3 @@ const remove = (req, res, next) => {
         })
 
 };
-
-module.exports = remove;
