@@ -12,19 +12,20 @@ remove = (req, res, next) => {
             if (!docs.n) {
                 res.status(404).json({
                     status: 404,
-                    message: 'User not found',
+                    message: 'User not found.',
                     request,
                 })
             } else {
                 res.status(200).json({
                     status: 200,
-                    message: 'User deleted',
+                    message: 'User deleted.',
                     request,
                 })
             }
         })
         .catch(err => {
             res.status(500).json({
+                message: 'Cannot remove that user.',
                 status: 500,
                 error: err
             })
