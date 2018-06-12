@@ -28,6 +28,7 @@ module.exports = (req, res) => {
                             email: req.body.email,
                             password: hash,
                             role: req.body.role,
+                            lastLoginAt: null,
                         });
                         user
                             .save()
@@ -41,7 +42,6 @@ module.exports = (req, res) => {
                                         email: docs.email,
                                         role: docs.role,
                                         createdAt: docs.createdAt,
-                                        updatedAt: docs.updatedAt,
                                         request: {
                                             type: "GET",
                                             url: `${process.env.URL}/users/g/${docs._id}`

@@ -11,6 +11,7 @@ const usersSchema = mongoose.Schema({
     },
     password: {type: String, required: true},
     role: {type: String, required: true},
+    lastLoginAt: {type: Date},
 }, {timestamps: true}, {collection: "users"});
 
 module.exports = mongoose.model("Users", usersSchema);

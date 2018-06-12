@@ -3,7 +3,7 @@ const News = require("../../models/news");
 
 module.exports = (req, res) => {
     const id = req.params.newsId;
-    const updateOps = {updated_at: Date.now()};
+    const updateOps = {updatedAt: Date.now()};
 
     for (const ops of req.body) {
         updateOps[ops.propName] = ops.value

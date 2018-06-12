@@ -12,8 +12,8 @@ module.exports = (req, res) => {
                     subTitle: docs.subTitle,
                     content: docs.content,
                     title: docs.title,
-                    created_at: docs.created_at,
-                    updated_at: docs.updated_at,
+                    createdAt: docs.createdAt,
+                    updatedAt: docs.updatedAt,
                     img: {
                         id: docs.imgId,
                         path: docs.imgPath,

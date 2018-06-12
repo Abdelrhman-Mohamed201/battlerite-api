@@ -10,6 +10,8 @@ router.post("/signup", controller.signup);
 
 router.post("/signin", controller.signin);
 
+router.post("/logout", controller.logout);
+
 router.get("/g/:userId", checkAuth,controller.getById);
 
 router.patch("/u/:userId", checkAuth, controller.update);

@@ -1,5 +1,6 @@
-require("dotenv").config();
 const Images = require("../../models/images");
+const handler = require("../../services/handler");
+require("dotenv").config();
 
 module.exports = (req, res) => {
     Images.findById(req.params.imageId).exec()
@@ -26,9 +27,10 @@ module.exports = (req, res) => {
             res.status(200).json(response)
         })
         .catch(err => {
-            res.status(500).json({
-                status: 500,
-                error: err
-            })
+            handler({
+                req, res,
+                error: err,
+                status: 500
+            });
         })
 };

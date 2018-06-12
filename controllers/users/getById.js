@@ -14,6 +14,7 @@ module.exports = (req, res) => {
                     role: docs.role,
                     createdAt: docs.createdAt,
                     updatedAt: docs.updatedAt,
+                    lastLoginAt: docs.lastLoginAt,
                     request: {
                         type: "GET",
                         description: "Get all users",
