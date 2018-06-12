@@ -12,8 +12,8 @@ module.exports = (req, res) => {
                         _id: news._id,
                         premalink: news.premalink,
                         subTitle: news.subTitle,
-                        created_at: news.created_at,
-                        updated_at: news.updated_at,
+                        createdAt: news.createdAt,
+                        updatedAt: news.updatedAt,
                         content: news.content,
                         title: news.title,
                         img: {

@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const imagesSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     fieldname: {type: String, required: true},
-    created_at: {type: Date, default: Date.now},
     originalname: {type: String, required: true},
     encoding: {type: String, required: true},
     mimetype: {type: String, required: true},
@@ -11,6 +10,6 @@ const imagesSchema = mongoose.Schema({
     filename: {type: String, required: true},
     path: {type: String, required: true},
     size: {type: Number, required: true}
-}, {collection: "images"});
+}, {timestamps: true}, {collection: "images"});
 
 module.exports = mongoose.model("Images", imagesSchema);
