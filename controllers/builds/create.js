@@ -4,7 +4,6 @@ const handler = require("../../services/handler");
 
 const Builds = require("../../models/builds");
 const Tokens = require("../../models/tokens");
-const Cards = require("../../models/cards");
 
 module.exports = (req, res) => {
     Tokens.findOne(req.body.token).exec()
@@ -12,34 +11,11 @@ module.exports = (req, res) => {
             const build = new Builds({
                 _id: mongoose.Types.ObjectId(),
                 author: token.userId,
-                name: req.body.name,
-                description: req.body.description,
+                ...req.body
             });
             build
                 .save()
                 .then(docs => {
-
-                    /* Saving the cards */
-                    const cards = req.body.cards.map(card => {
-                        return {
-                            name: card.name,
-                            description: card.description,
-                            type: card.type,
-                            keyword: card.keyword,
-                            buildId: docs._id,
-                        }
-                    });
-                    Cards.insertMany(cards)
-                        .catch(err => {
-                            handler({
-                                req, res,
-                                error: err,
-                                status: 500,
-                                kind: "Can't save the cards."
-                            });
-                        });
-                    /* End:Saving the cards */
-
                     const response = {
                         status: 201,
                         message: "Created build successfully.",
@@ -48,7 +24,9 @@ module.exports = (req, res) => {
                             author: docs.author,
                             name: docs.name,
                             description: docs.description,
-                            cards,
+                            cards: docs.cards.map(card => {
+                                return {...card}
+                            }),
                             request: {
                                 type: "GET",
                                 url: `${process.env.URL}/builds/g/${docs._id}`

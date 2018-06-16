@@ -14,8 +14,6 @@ module.exports = (req, res) => {
                         author: build.author,
                         name: build.name,
                         description: build.description,
-                        createdAt: build.createdAt,
-                        updatedAt: build.updatedAt,
                         request: {
                             type: "GET",
                             url: `${process.env.URL}/builds/g/${build._id}`

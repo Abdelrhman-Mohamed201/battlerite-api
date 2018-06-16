@@ -5,6 +5,7 @@ const buildsSchema = mongoose.Schema({
     author: {type: mongoose.Schema.Types.ObjectId, ref: 'Users', required: true},
     name: {type: String, required: true},
     description: {type: String, required: true},
+    cards: {type: Array, required: true},
 }, {timestamps: true}, {collection: "builds"});
 
 module.exports = mongoose.model("Builds", buildsSchema);

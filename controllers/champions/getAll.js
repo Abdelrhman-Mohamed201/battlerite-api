@@ -1,27 +1,24 @@
 require("dotenv").config();
+const Champions = require("../../models/champions");
 const handler = require("../../services/handler");
-const News = require("../../models/news");
 
 module.exports = (req, res) => {
-    News.find().exec()
+    Champions.find().exec()
         .then(docs => {
             const response = {
                 status: 200,
                 count: docs.length,
-                collection: docs.map(news => {
+                collection: docs.map(champion => {
                     return {
-                        _id: news._id,
-                        premalink: news.premalink,
-                        subTitle: news.subTitle,
-                        content: news.content,
-                        title: news.title,
-                        img: {
-                            id: news.imgId,
-                            path: news.imgPath,
-                        },
+                        _id: docs._id,
+                        author: docs.author,
+                        name: docs.name,
+                        type: docs.type,
+                        hp: docs.hp,
+                        bio: docs.bio,
                         request: {
                             type: "GET",
-                            url: `${process.env.URL}/news/g/${news._id}`
+                            url: `${process.env.URL}/champions/g/${champion._id}`
                         }
                     }
                 }),
@@ -33,7 +30,7 @@ module.exports = (req, res) => {
                 req, res,
                 error: err,
                 status: 500,
-                kind: "Can't find the news."
+                kind: "Can't find the champions."
             });
-        })
+        });
 };

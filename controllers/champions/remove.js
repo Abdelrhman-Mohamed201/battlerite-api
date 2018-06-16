@@ -14,9 +14,9 @@ module.exports = (req, res) => {
             } else {
                 res.status(200).json({
                     status: 200,
-                    message: "Build deleted.",
+                    message: "Champion deleted.",
                     type: "GET",
-                    url: `${process.env.URL}/builds/g`,
+                    url: `${process.env.URL}/champions/g`,
                 })
             }
         })
@@ -25,7 +25,7 @@ module.exports = (req, res) => {
                 req, res,
                 error: err,
                 status: 500,
-                kind: "Can't find the build."
+                kind: "Can't find the champion."
             });
         })
 };
