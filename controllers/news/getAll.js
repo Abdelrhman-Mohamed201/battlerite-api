@@ -1,4 +1,5 @@
 require("dotenv").config();
+const handler = require("../../services/handler");
 const News = require("../../models/news");
 
 module.exports = (req, res) => {
@@ -30,9 +31,11 @@ module.exports = (req, res) => {
             res.status(200).json(response)
         })
         .catch(err => {
-            res.status(500).json({
+            handler({
+                req, res,
+                error: err,
                 status: 500,
-                error: err
-            })
+                kind: "Can't find the news."
+            });
         })
 };

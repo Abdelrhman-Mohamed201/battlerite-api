@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
+const handler = require("../../services/handler");
 const Users = require("../../models/users");
 const bcrypt = require("bcrypt");
 
@@ -7,20 +8,22 @@ module.exports = (req, res) => {
     Users.find({email: req.body.email}).exec()
         .then(user => {
             if (user.length >= 1) {
-                res.status(409).json({
+                handler({
+                    req, res,
                     status: 409,
-                    message: "This email is exist, please enter another one.",
-                })
+                    kind: "This email is exist, please enter another one."
+                });
             } else {
 
                 // Hashing the password
                 bcrypt.hash(req.body.password, 10, (err, hash) => {
                     if (err) {
-                        res.status(500).json({
-                            status: 500,
-                            message: "Not found",
+                        handler({
+                            req, res,
                             error: err,
-                        })
+                            status: 500,
+                            kind: "Error on your password."
+                        });
                     } else {
                         const user = new Users({
                             _id: mongoose.Types.ObjectId(),
@@ -51,21 +54,23 @@ module.exports = (req, res) => {
                                 res.status(201).json(response)
                             })
                             .catch(err => {
-                                res.status(500).json({
-                                    message: "Can't create that user.",
+                                handler({
+                                    req, res,
+                                    error: err,
                                     status: 500,
-                                    error: err
-                                })
+                                    kind: "Can't create that user."
+                                });
                             })
                     }
                 })
             }
         })
         .catch(err => {
-            res.status(500).json({
-                message: "Can't find.",
+            handler({
+                req, res,
+                error: err,
                 status: 500,
-                error: err
-            })
+                kind: "Can't access users."
+            });
         })
 };

@@ -22,7 +22,6 @@ function ArrayPlusDelay(array, delegate, delay) {
 }
 
 module.exports = ({req, token, expiresIn}) => {
-    console.log(expireToken);
     expireToken.push(token);
     const updateOps = {
         updatedAt: Date.now(),
@@ -31,5 +30,4 @@ module.exports = ({req, token, expiresIn}) => {
     ArrayPlusDelay(expireToken, (token) => {
         Tokens.update({token}, {$set: updateOps}).exec()
     }, ms(expiresIn));
-    console.log(expireToken);
 };

@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 require("dotenv").config();
+const handler = require("../../services/handler");
 const Users = require("../../models/users");
 const createToken = require("../tokens/create");
 const autoExpireToken = require("../../services/autoExpireToken");
@@ -10,10 +11,11 @@ module.exports = (req, res) => {
     Users.findOne({email: req.body.email}).exec()
         .then(user => {
             if (!user) {
-                res.status(409).json({
+                handler({
+                    req, res,
                     status: 409,
-                    message: "Please check your email.",
-                })
+                    kind: "Please check your email."
+                });
             } else {
                 Users.update({_id: user._id}, {$set: {lastLoginAt: Date.now()}}).exec();
 
@@ -47,12 +49,21 @@ module.exports = (req, res) => {
                             }
                         })
                     }
-                    res.status(401).json({
+                    handler({
+                        req, res,
+                        error: err,
                         status: 401,
-                        message: "Auth failed.",
-                    })
+                        kind: "Auth failed."
+                    });
                 })
             }
         })
-        .catch()
+        .catch(err => {
+            handler({
+                req, res,
+                error: err,
+                status: 500,
+                kind: "Can't find the user."
+            });
+        })
 };

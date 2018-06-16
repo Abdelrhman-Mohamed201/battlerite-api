@@ -30,7 +30,8 @@ module.exports = (req, res) => {
             handler({
                 req, res,
                 error: err,
-                status: 500
+                status: 500,
+                kind: "Can't find that image."
             });
         })
 };
