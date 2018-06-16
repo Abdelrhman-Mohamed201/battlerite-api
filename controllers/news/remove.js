@@ -25,7 +25,7 @@ module.exports = (req, res) => {
                                 if (!imagesDocs.n) {
                                     res.status(404).json({
                                         status: 404,
-                                        message: "Image not found",
+                                        message: "Image not found.",
                                         request,
                                     })
                                 } else {
@@ -39,7 +39,7 @@ module.exports = (req, res) => {
                                     /** End:Remove the image file **/
                                     res.status(200).json({
                                         status: 200,
-                                        message: "News deleted",
+                                        message: "News deleted.",
                                         request,
                                     })
                                 }

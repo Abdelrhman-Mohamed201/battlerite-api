@@ -1,33 +1,34 @@
 require("dotenv").config();
-const Users = require("../../models/users");
+const handler = require("../../services/handler");
+const Builds = require("../../models/builds");
 
 module.exports = (req, res) => {
-    const id = req.params.userId;
-    Users.remove({_id: id}).exec()
+    Builds.remove({_id: req.params.buildId}).exec()
         .then(docs => {
             const request = {
                 type: "GET",
-                url: `${process.env.URL}/users/g`,
+                url: `${process.env.URL}/builds/g`,
             };
             if (!docs.n) {
                 res.status(404).json({
                     status: 404,
-                    message: "User not found.",
+                    message: "Build not found.",
                     request,
                 })
             } else {
                 res.status(200).json({
                     status: 200,
-                    message: "User deleted.",
+                    message: "Build deleted.",
                     request,
                 })
             }
         })
         .catch(err => {
-            res.status(500).json({
-                message: "Can't remove that user.",
+            handler({
+                req, res,
+                error: err,
                 status: 500,
-                error: err
-            })
+                kind: "Can't find the build."
+            });
         })
 };

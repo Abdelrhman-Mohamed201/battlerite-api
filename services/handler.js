@@ -21,7 +21,7 @@ module.exports = ({req, res, status, kind, error}) => {
         })
         .catch(err => {
             return res.status(500).json({
-                message: "Cannot save the log error.",
+                message: "Can't save the log error.",
                 status: 500,
                 error: err
             })
