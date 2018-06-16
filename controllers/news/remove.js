@@ -9,61 +9,66 @@ module.exports = (req, res) => {
         .then(docsImgId => {
             News.remove({_id: id}).exec()
                 .then(newsDocs => {
-                    const request = {
-                        type: "GET",
-                        url: `${process.env.URL}/news/g`,
-                    };
                     if (!newsDocs.n) {
-                        res.status(404).json({
+                        handler({
+                            req, res,
                             status: 404,
-                            message: "Not found",
-                            request,
-                        })
+                            kind: "News not found."
+                        });
                     } else {
                         Images.remove().exec()
                             .then(imagesDocs => {
                                 if (!imagesDocs.n) {
-                                    res.status(404).json({
+                                    handler({
+                                        req, res,
                                         status: 404,
-                                        message: "Image not found.",
-                                        request,
-                                    })
+                                        kind: "Image not found."
+                                    });
                                 } else {
                                     /** Remove the image file **/
                                     fs.unlinkSync(`uploads/news/${docsImgId.imgId}.jpg`, (err) => {
-                                        if (err) res.status(500).json({
+                                        if (err) handler({
+                                            req, res,
+                                            error: err,
                                             status: 500,
-                                            error: err
-                                        })
+                                            kind: "Image not found."
+                                        });
                                     });
                                     /** End:Remove the image file **/
                                     res.status(200).json({
                                         status: 200,
                                         message: "News deleted.",
-                                        request,
+                                        type: "GET",
+                                        url: `${process.env.URL}/news/g`,
                                     })
                                 }
                             })
                             .catch(err => {
-                                res.status(500).json({
+                                handler({
+                                    req, res,
+                                    error: err,
                                     status: 500,
-                                    error: err
-                                })
+                                    kind: "Can't remove the image."
+                                });
                             })
                     }
                 })
                 .catch(err => {
-                    res.status(500).json({
+                    handler({
+                        req, res,
+                        error: err,
                         status: 500,
-                        error: err
-                    })
+                        kind: "Can't remove the news."
+                    });
                 })
         })
         .catch(err => {
-            res.status(500).json({
+            handler({
+                req, res,
+                error: err,
                 status: 500,
-                error: err
-            })
+                kind: "Can't find the news."
+            });
         })
 
 };
