@@ -15,8 +15,6 @@ module.exports = (req, res) => {
                         email: user.email,
                         password: user.password,
                         role: user.role,
-                        createdAt: user.createdAt,
-                        updatedAt: user.updatedAt,
                         request: {
                             type: "GET",
                             url: `${process.env.URL}/users/g/${user._id}`

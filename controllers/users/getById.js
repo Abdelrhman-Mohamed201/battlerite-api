@@ -13,9 +13,9 @@ module.exports = (req, res) => {
                     email: docs.email,
                     password: docs.password,
                     role: docs.role,
+                    lastLoginAt: docs.lastLoginAt,
                     createdAt: docs.createdAt,
                     updatedAt: docs.updatedAt,
-                    lastLoginAt: docs.lastLoginAt,
                     request: {
                         type: "GET",
                         description: "Get all users",

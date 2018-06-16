@@ -13,12 +13,12 @@ module.exports = (req, res) => {
                     subTitle: docs.subTitle,
                     content: docs.content,
                     title: docs.title,
-                    createdAt: docs.createdAt,
-                    updatedAt: docs.updatedAt,
                     img: {
                         id: docs.imgId,
                         path: docs.imgPath,
                     },
+                    createdAt: docs.createdAt,
+                    updatedAt: docs.updatedAt,
                     request: {
                         type: "GET",
                         description: "Get all news",
