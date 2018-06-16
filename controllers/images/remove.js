@@ -6,36 +6,36 @@ module.exports = (req, res) => {
     const id = req.params.imageId;
     Images.remove().exec()
         .then(docs => {
-            const request = {
-                type: "GET",
-                url: `${process.env.URL}/images/g`,
-            };
             if (!docs.n) {
-                res.status(404).json({
+                handler({
+                    req, res,
                     status: 404,
-                    message: 'Image not found',
-                    request,
-                })
+                    kind: "Image not found."
+                });
             } else {
                 /** Remove the image file **/
                 fs.unlinkSync(`uploads/news/${id}.jpg`, (err) => {
-                    if (err) res.status(500).json({
+                    if (err) handler({
+                        req, res,
                         status: 500,
-                        error: err
-                    })
+                        kind: "Can't remove the image."
+                    });
                 });
                 /** End:Remove the image file **/
                 res.status(200).json({
                     status: 200,
-                    message: "Image deleted",
-                    request,
+                    message: "Image deleted.",
+                    type: "GET",
+                    url: `${process.env.URL}/images/g`,
                 })
             }
         })
         .catch(err => {
-            res.status(500).json({
+            handler({
+                req, res,
+                error: err,
                 status: 500,
-                error: err
-            })
-        })
+                kind: "can't find the image."
+            });
+        });
 };

@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const usersRouters = require("./routes/users");
 const newsRouters = require("./routes/news");
 const imagesRouters = require("./routes/images");
+const buildsRouters = require("./routes/builds");
 
 mongoose.connect("mongodb://localhost/battlerite");
 mongoose.Promise = global.Promise;
@@ -34,6 +35,7 @@ app.use((req, res, next) => {
 app.use('/users', usersRouters);
 app.use('/news', newsRouters);
 app.use('/images', imagesRouters);
+app.use('/builds', buildsRouters);
 
 // Handle wrong routes
 app.use((req, res, next) => {

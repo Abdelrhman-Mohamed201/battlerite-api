@@ -35,7 +35,7 @@ module.exports = (req, res) => {
                             .then(docs => {
                                 const response = {
                                     status: 201,
-                                    message: "Created user successfully",
+                                    message: "Created user successfully.",
                                     collection: {
                                         _id: docs._id,
                                         name: docs.name,
@@ -52,7 +52,7 @@ module.exports = (req, res) => {
                             })
                             .catch(err => {
                                 res.status(500).json({
-                                    message: "Cannot create that user.",
+                                    message: "Can't create that user.",
                                     status: 500,
                                     error: err
                                 })
@@ -63,7 +63,7 @@ module.exports = (req, res) => {
         })
         .catch(err => {
             res.status(500).json({
-                message: "Cannot find.",
+                message: "Can't find.",
                 status: 500,
                 error: err
             })

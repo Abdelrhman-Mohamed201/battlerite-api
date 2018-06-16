@@ -27,7 +27,6 @@ module.exports = ({req, res, tokenPassed}) => {
             Tokens.update({token}, {$set: updateOps})
                 .exec()
                 .then(docs => {
-                    console.log(docs);
                     const response = {
                         status: 200,
                         message: "Logged out.",
