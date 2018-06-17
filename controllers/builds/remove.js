@@ -12,12 +12,15 @@ module.exports = (req, res) => {
                     kind: "Champion not found."
                 });
             } else {
-                res.status(200).json({
+                const reponse = {
                     status: 200,
                     message: "Build deleted.",
-                    type: "GET",
-                    url: `${process.env.URL}/builds/g`,
-                })
+                    request: {
+                        type: "GET",
+                        url: `${process.env.URL}/builds/g`
+                    }
+                };
+                res.status(reponse.status).json(reponse);
             }
         })
         .catch(err => {

@@ -39,19 +39,13 @@ module.exports = (req, res) => {
                                 const response = {
                                     status: 201,
                                     message: "Created user successfully.",
-                                    collection: {
-                                        _id: docs._id,
-                                        name: docs.name,
-                                        email: docs.email,
-                                        role: docs.role,
-                                        createdAt: docs.createdAt,
-                                        request: {
-                                            type: "GET",
-                                            url: `${process.env.URL}/users/g/${docs._id}`
-                                        }
-                                    },
+                                    collection: docs,
+                                    request: {
+                                        type: "GET",
+                                        url: `${process.env.URL}/users/g/${docs._id}`
+                                    }
                                 };
-                                res.status(201).json(response)
+                                res.status(response.status).json(response)
                             })
                             .catch(err => {
                                 handler({

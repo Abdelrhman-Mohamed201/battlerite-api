@@ -8,22 +8,17 @@ module.exports = (req, res) => {
             const response = {
                 status: 200,
                 count: docs.length,
-                collection: docs.map(champion => {
+                ...docs.map(champion => {
                     return {
-                        _id: docs._id,
-                        author: docs.author,
-                        name: docs.name,
-                        type: docs.type,
-                        hp: docs.hp,
-                        bio: docs.bio,
+                        collection: champion,
                         request: {
                             type: "GET",
                             url: `${process.env.URL}/champions/g/${champion._id}`
                         }
                     }
-                }),
+                })
             };
-            res.status(200).json(response)
+            res.status(response.status).json(response);
         })
         .catch(err => {
             handler({

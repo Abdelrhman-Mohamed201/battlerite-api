@@ -10,6 +10,6 @@ const imagesSchema = mongoose.Schema({
     filename: {type: String, required: true},
     path: {type: String, required: true},
     size: {type: Number, required: true}
-}, {timestamps: true}, {collection: "images"});
+}, {collection: "images", timestamps: true, versionKey: false}); // versionKey: for remove the __v from collection
 
 module.exports = mongoose.model("Images", imagesSchema);

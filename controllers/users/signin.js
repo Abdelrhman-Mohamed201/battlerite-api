@@ -39,15 +39,15 @@ module.exports = (req, res) => {
 
                         autoExpireToken({req, token, expiresIn});
 
-                        return res.status(200).json({
+                        const response = {
                             status: 200,
-                            message: "Auth successful",
-                            user: {
+                            collection: {
                                 ...userData,
                                 expiresIn,
                                 token,
                             }
-                        })
+                        };
+                        res.status(response.status).json(response);
                     }
                     handler({
                         req, res,

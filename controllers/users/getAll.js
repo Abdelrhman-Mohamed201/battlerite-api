@@ -8,13 +8,9 @@ module.exports = (req, res) => {
             const response = {
                 status: 200,
                 count: docs.length,
-                collection: docs.map(user => {
+                ...docs.map(user => {
                     return {
-                        _id: user._id,
-                        name: user.name,
-                        email: user.email,
-                        password: user.password,
-                        role: user.role,
+                        collection: user,
                         request: {
                             type: "GET",
                             url: `${process.env.URL}/users/g/${user._id}`
@@ -22,7 +18,7 @@ module.exports = (req, res) => {
                     }
                 }),
             };
-            res.status(200).json(response)
+            res.status(response.status).json(response);
         })
         .catch(err => {
             handler({

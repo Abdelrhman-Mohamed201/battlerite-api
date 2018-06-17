@@ -7,24 +7,14 @@ module.exports = (req, res) => {
         .then(build => {
             const response = {
                 status: 200,
-                collection: {
-                    _id: build._id,
-                    author: build.author,
-                    name: build.name,
-                    description: build.description,
-                    cards: build.map(card => {
-                        return {...card}
-                    }),
-                    createdAt: build.createdAt,
-                    updatedAt: build.updatedAt,
-                    request: {
-                        type: "GET",
-                        description: "Get all builds",
-                        url: `${process.env.URL}/builds/g`
-                    }
+                collection: build,
+                request: {
+                    type: "GET",
+                    description: "Get all builds",
+                    url: `${process.env.URL}/builds/g`
                 }
             };
-            res.status(200).json(response)
+            res.status(response.status).json(response);
         })
         .catch(err => {
             handler({

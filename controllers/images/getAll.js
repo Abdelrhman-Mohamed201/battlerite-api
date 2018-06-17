@@ -8,19 +8,17 @@ module.exports = (req, res) => {
             const response = {
                 status: 200,
                 count: docs.length,
-                collection: docs.map(image => {
+                ...docs.map(image => {
                     return {
-                        _id: image._id,
-                        originalname: image.originalname,
-                        path: image.path,
+                        collection: image,
                         request: {
                             type: "GET",
                             url: `${process.env.URL}/images/g/${image._id}`
                         }
                     }
-                }),
+                })
             };
-            res.status(200).json(response)
+            res.status(response.status).json(response);
         })
         .catch(err => {
             handler({

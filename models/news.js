@@ -9,6 +9,6 @@ const newsSchema = mongoose.Schema({
     subTitle: {type: String, required: true},
     content: {type: String, required: true},
     title: {type: String, required: true},
-}, {timestamps: true}, {collection: "news"});
+}, {collection: "news", timestamps: true, versionKey: false}); // versionKey: for remove the __v from collection
 
 module.exports = mongoose.model("News", newsSchema);

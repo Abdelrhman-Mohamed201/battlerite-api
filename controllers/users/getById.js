@@ -7,23 +7,14 @@ module.exports = (req, res) => {
         .then(docs => {
             const response = {
                 status: 200,
-                collection: {
-                    _id: docs._id,
-                    name: docs.name,
-                    email: docs.email,
-                    password: docs.password,
-                    role: docs.role,
-                    lastLoginAt: docs.lastLoginAt,
-                    createdAt: docs.createdAt,
-                    updatedAt: docs.updatedAt,
-                    request: {
-                        type: "GET",
-                        description: "Get all users",
-                        url: `${process.env.URL}/users/g`
-                    }
+                collection: docs,
+                request: {
+                    type: "GET",
+                    description: "Get all users",
+                    url: `${process.env.URL}/users/g`
                 }
             };
-            res.status(200).json(response)
+            res.status(response.status).json(response);
         })
         .catch(err => {
             handler({

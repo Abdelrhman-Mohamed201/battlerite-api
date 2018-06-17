@@ -8,6 +8,6 @@ const errorsSchema = mongoose.Schema({
     name: {type: String},
     message: {type: String},
     token: {type: String, ref: "Tokens"},
-}, {timestamps: true}, {collection: "errors"});
+}, {collection: "errors", timestamps: true, versionKey: false}); // versionKey: for remove the __v from collection
 
 module.exports = mongoose.model("Errors", errorsSchema);

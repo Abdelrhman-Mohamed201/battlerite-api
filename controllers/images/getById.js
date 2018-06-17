@@ -7,24 +7,14 @@ module.exports = (req, res) => {
         .then(docs => {
             const response = {
                 status: 200,
-                collection: {
-                    _id: docs._id,
-                    fieldname: docs.fieldname,
-                    originalname: docs.originalname,
-                    encoding: docs.encoding,
-                    mimetype: docs.mimetype,
-                    destination: docs.destination,
-                    filename: docs.filename,
-                    path: docs.path,
-                    size: docs.size,
-                    request: {
-                        type: "GET",
-                        description: "Get all images",
-                        url: `${process.env.URL}/images/g`
-                    }
+                collection: docs,
+                request: {
+                    type: "GET",
+                    description: "Get all images",
+                    url: `${process.env.URL}/images/g`
                 }
             };
-            res.status(200).json(response)
+            res.status(response.status).json(response);
         })
         .catch(err => {
             handler({

@@ -12,6 +12,6 @@ const usersSchema = mongoose.Schema({
     password: {type: String, required: true},
     role: {type: String, required: true},
     lastLoginAt: {type: Date},
-}, {timestamps: true}, {collection: "users"});
+}, {collection: "users", timestamps: true, versionKey: false}); // versionKey: for remove the __v from collection
 
 module.exports = mongoose.model("Users", usersSchema);

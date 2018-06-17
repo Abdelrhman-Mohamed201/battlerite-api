@@ -8,20 +8,17 @@ module.exports = (req, res) => {
             const response = {
                 status: 200,
                 count: docs.length,
-                collection: docs.map(build => {
+                ...docs.map(build => {
                     return {
-                        _id: build._id,
-                        author: build.author,
-                        name: build.name,
-                        description: build.description,
+                        collection: build,
                         request: {
                             type: "GET",
                             url: `${process.env.URL}/builds/g/${build._id}`
                         }
                     }
-                }),
+                })
             };
-            res.status(200).json(response)
+            res.status(response.status).json(response);
         })
         .catch(err => {
             handler({
