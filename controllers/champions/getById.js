@@ -4,44 +4,17 @@ const Champions = require("../../models/champions");
 
 module.exports = (req, res) => {
     Champions.findById(req.params.championId).exec()
-        .then(card => {
+        .then(champion => {
             const response = {
                 status: 200,
-                collection: {
-                    _id: card._id,
-                    author: card.author,
-                    name: card.name,
-                    type: card.type,
-                    hp: card.hp,
-                    bio: card.bio,
-                    basicGuide: card.basicGuide.map(basicGuide => {
-                        return {...basicGuide}
-                    }),
-                    masterGuide: card.masterGuide.map(masterGuide => {
-                        return {...masterGuide}
-                    }),
-                    status: card.status.map(status => {
-                        return {...status}
-                    }),
-                    combos: card.combos.map(combos => {
-                        return {...combos}
-                    }),
-                    spells: card.spells.map(spells => {
-                        return {...spells}
-                    }),
-                    battlerites: card.battlerites.map(battlerites => {
-                        return {...battlerites}
-                    }),
-                    createdAt: card.createdAt,
-                    updatedAt: card.updatedAt,
-                    request: {
-                        type: "GET",
-                        description: "Get all champions",
-                        url: `${process.env.URL}/champions/g`
-                    }
+                collection: champion,
+                request: {
+                    type: "GET",
+                    description: "Get all champions",
+                    url: `${process.env.URL}/champions/g`
                 }
             };
-            res.status(200).json(response)
+            res.status(response.status).json(response);
         })
         .catch(err => {
             handler({

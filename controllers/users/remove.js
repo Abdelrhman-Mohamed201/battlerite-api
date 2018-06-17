@@ -14,12 +14,15 @@ module.exports = (req, res) => {
                     kind: "User not found."
                 });
             } else {
-                res.status(200).json({
+                const reponse = {
                     status: 200,
                     message: "User deleted.",
-                    type: "GET",
-                    url: `${process.env.URL}/users/g`,
-                })
+                    request: {
+                        type: "GET",
+                        url: `${process.env.URL}/users/g`
+                    }
+                };
+                res.status(reponse.status).json(reponse);
             }
         })
         .catch(err => {

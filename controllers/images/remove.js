@@ -22,12 +22,15 @@ module.exports = (req, res) => {
                     });
                 });
                 /** End:Remove the image file **/
-                res.status(200).json({
+                const reponse = {
                     status: 200,
                     message: "Image deleted.",
-                    type: "GET",
-                    url: `${process.env.URL}/images/g`,
-                })
+                    request: {
+                        type: "GET",
+                        url: `${process.env.URL}/images/g`
+                    }
+                };
+                res.status(reponse.status).json(reponse);
             }
         })
         .catch(err => {

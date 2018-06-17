@@ -19,40 +19,13 @@ module.exports = (req, res) => {
                     const response = {
                         status: 201,
                         message: "Created champion successfully.",
-                        collection: {
-                            _id: docs._id,
-                            author: docs.author,
-                            name: docs.name,
-                            type: docs.type,
-                            hp: docs.hp,
-                            bio: docs.bio,
-                            basicGuide: docs.basicGuide.map(basicGuide => {
-                                return {...basicGuide}
-                            }),
-                            masterGuide: docs.masterGuide.map(masterGuide => {
-                                return {...masterGuide}
-                            }),
-                            status: docs.status.map(status => {
-                                return {...status}
-                            }),
-                            combos: docs.combos.map(combos => {
-                                return {...combos}
-                            }),
-                            spells: docs.spells.map(spells => {
-                                return {...spells}
-                            }),
-                            battlerites: docs.battlerites.map(battlerites => {
-                                return {...battlerites}
-                            }),
-                            createdAt: docs.createdAt,
-                            updatedAt: docs.updatedAt,
-                            request: {
-                                type: "GET",
-                                url: `${process.env.URL}/champions/g/${docs._id}`
-                            }
-                        },
+                        collection: docs,
+                        request: {
+                            type: "GET",
+                            url: `${process.env.URL}/champions/g/${docs._id}`
+                        }
                     };
-                    res.status(201).json(response)
+                    res.status(response.status).json(response);
                 })
                 .catch(err => {
                     handler({

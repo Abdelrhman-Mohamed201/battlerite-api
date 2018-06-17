@@ -8,25 +8,17 @@ module.exports = (req, res) => {
             const response = {
                 status: 200,
                 count: docs.length,
-                collection: docs.map(news => {
+                ...docs.map(news => {
                     return {
-                        _id: news._id,
-                        premalink: news.premalink,
-                        subTitle: news.subTitle,
-                        content: news.content,
-                        title: news.title,
-                        img: {
-                            id: news.imgId,
-                            path: news.imgPath,
-                        },
+                        collection: news,
                         request: {
                             type: "GET",
                             url: `${process.env.URL}/news/g/${news._id}`
                         }
                     }
-                }),
+                })
             };
-            res.status(200).json(response)
+            res.status(response.status).json(response);
         })
         .catch(err => {
             handler({

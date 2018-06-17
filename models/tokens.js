@@ -6,6 +6,6 @@ const tokensSchema = mongoose.Schema({
     state: {type: String, required: true},
     expiresIn: {type: String, required: true},
     userId: {type: String, ref: "Users", required: true},
-}, {timestamps: true}, {collection: "tokens"});
+}, {collection: "tokens", timestamps: true, versionKey: false}); // versionKey: for remove the __v from collection
 
 module.exports = mongoose.model("Tokens", tokensSchema);

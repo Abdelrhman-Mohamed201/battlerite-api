@@ -8,14 +8,14 @@ module.exports = (req, res) => {
     Champions.update({_id: id}, {$set: updateOps}).exec()
         .then(docs => {
             const reponse = {
-                message: "Champion updated",
+                status: 200,
+                message: "Champion updated.",
                 request: {
                     type: "GET",
                     url: `${process.env.URL}/champions/g/${id}`
-                },
-                status: 200
+                }
             };
-            res.status(200).json(reponse)
+            res.status(reponse.status).json(reponse);
         })
         .catch(err => {
             handler({

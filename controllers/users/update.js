@@ -8,14 +8,14 @@ module.exports = (req, res) => {
     Users.update({_id: id}, {$set: updateOps}).exec()
         .then(docs => {
             const reponse = {
-                message: "User updated",
+                status: 200,
+                message: "User updated.",
                 request: {
                     type: "GET",
-                    url: `${process.env.URL}/users/g/${id}`
-                },
-                status: 200
+                    url: `${process.env.URL}/users/g`
+                }
             };
-            res.status(200).json(reponse)
+            res.status(reponse.status).json(reponse);
         })
         .catch(err => {
             handler({

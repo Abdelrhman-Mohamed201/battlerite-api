@@ -12,12 +12,15 @@ module.exports = (req, res) => {
                     kind: "Champion not found."
                 });
             } else {
-                res.status(200).json({
+                const reponse = {
                     status: 200,
                     message: "Champion deleted.",
-                    type: "GET",
-                    url: `${process.env.URL}/champions/g`,
-                })
+                    request: {
+                        type: "GET",
+                        url: `${process.env.URL}/champions/g`
+                    }
+                };
+                res.status(reponse.status).json(reponse);
             }
         })
         .catch(err => {

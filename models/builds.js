@@ -6,6 +6,7 @@ const buildsSchema = mongoose.Schema({
     name: {type: String, required: true},
     description: {type: String, required: true},
     cards: {type: Array, required: true},
-}, {timestamps: true}, {collection: "builds"});
+    versionKey: false
+}, {collection: "builds", timestamps: true, versionKey: false}); // versionKey: for remove the __v from collection
 
 module.exports = mongoose.model("Builds", buildsSchema);

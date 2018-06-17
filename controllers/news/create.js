@@ -53,24 +53,13 @@ module.exports = (req, res) => {
                             const response = {
                                 status: 201,
                                 message: "Created news successfully.",
-                                collection: {
-                                    _id: docs._id,
-                                    author: docs.author,
-                                    premalink: docs.premalink,
-                                    subTitle: docs.subTitle,
-                                    content: docs.content,
-                                    title: docs.title,
-                                    img: {
-                                        id: docs.imgId,
-                                        path: docs.imgPath,
-                                    },
-                                    request: {
-                                        type: "GET",
-                                        url: `${process.env.URL}/news/g/${docs._id}`
-                                    }
-                                },
+                                collection: docs,
+                                request: {
+                                    type: "GET",
+                                    url: `${process.env.URL}/news/g/${docs._id}`
+                                }
                             };
-                            res.status(201).json(response)
+                            res.status(response.status).json(response);
                         })
                         .catch(err => {
                             handler({

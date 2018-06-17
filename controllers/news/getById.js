@@ -7,26 +7,14 @@ module.exports = (req, res) => {
         .then(docs => {
             const response = {
                 status: 200,
-                collection: {
-                    _id: docs._id,
-                    premalink: docs.premalink,
-                    subTitle: docs.subTitle,
-                    content: docs.content,
-                    title: docs.title,
-                    img: {
-                        id: docs.imgId,
-                        path: docs.imgPath,
-                    },
-                    createdAt: docs.createdAt,
-                    updatedAt: docs.updatedAt,
-                    request: {
-                        type: "GET",
-                        description: "Get all news",
-                        url: `${process.env.URL}/news/g`
-                    }
+                collection: docs,
+                request: {
+                    type: "GET",
+                    description: "Get all news",
+                    url: `${process.env.URL}/news/g`
                 }
             };
-            res.status(200).json(response)
+            res.status(response.status).json(response);
         })
         .catch(err => {
             handler({

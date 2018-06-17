@@ -19,21 +19,13 @@ module.exports = (req, res) => {
                     const response = {
                         status: 201,
                         message: "Created build successfully.",
-                        collection: {
-                            _id: docs._id,
-                            author: docs.author,
-                            name: docs.name,
-                            description: docs.description,
-                            cards: docs.cards.map(card => {
-                                return {...card}
-                            }),
-                            request: {
-                                type: "GET",
-                                url: `${process.env.URL}/builds/g/${docs._id}`
-                            }
-                        },
+                        collection: docs,
+                        request: {
+                            type: "GET",
+                            url: `${process.env.URL}/builds/g/${docs._id}`
+                        }
                     };
-                    res.status(201).json(response)
+                    res.status(response.status).json(response);
                 })
                 .catch(err => {
                     handler({
