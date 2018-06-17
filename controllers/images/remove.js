@@ -1,5 +1,6 @@
 const fs = require("fs");
 require("dotenv").config();
+const handler = require("../../services/handler");
 const Images = require("../../models/images");
 
 module.exports = (req, res) => {
@@ -14,12 +15,14 @@ module.exports = (req, res) => {
                 });
             } else {
                 /** Remove the image file **/
-                fs.unlinkSync(`uploads/news/${id}.jpg`, (err) => {
-                    if (err) handler({
-                        req, res,
-                        status: 500,
-                        kind: "Can't remove the image."
-                    });
+                fs.unlinkSync(`${process.env.UPLOAD_IMAGES_NEWS}/${id}.jpg`, (err) => {
+                    if (err) {
+                        handler({
+                            req, res,
+                            status: 500,
+                            kind: "Can't remove the image."
+                        });
+                    }
                 });
                 /** End:Remove the image file **/
                 const reponse = {

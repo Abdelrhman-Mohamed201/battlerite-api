@@ -9,7 +9,6 @@ module.exports = (req, res) => {
             if (!docs.n) {
                 handler({
                     req, res,
-                    error: err,
                     status: 404,
                     kind: "User not found."
                 });

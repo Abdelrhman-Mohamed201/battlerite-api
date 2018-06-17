@@ -27,11 +27,13 @@ module.exports = (req, res) => {
         .then(img => {
             /** Rename the image file **/
             fs.rename(`${image.destination}/${image.originalname}`, image.path, err => {
-                if (err) handler({
-                    error: err,
-                    status: 500,
-                    kind: "Can't replace image name to image id."
-                });
+                if (err) {
+                    handler({
+                        error: err,
+                        status: 500,
+                        kind: "Can't replace image name to image id."
+                    });
+                }
             });
             /** End:Rename the image file **/
             Tokens.findOne(req.body.token).exec()

@@ -1,5 +1,5 @@
 const deadToken = require("../tokens/expire");
 
-module.exports = (req,res)=>{
-    deadToken({req,res});
+module.exports = (req, res) => {
+    deadToken({req, res});
 };

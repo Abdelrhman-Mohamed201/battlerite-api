@@ -22,18 +22,18 @@ function ArrayPlusDelay(array, delegate, delay) {
         }
 
         // increment, and if we're past array, clear interval
-        if (i++ >= array.length - 1)
+        if (i++ >= array.length - 1){
             clearInterval(interval);
+        }
     }, delay);
 
     return interval
 }
 
 module.exports = ({req, token, expiresIn}) => {
-    expireToken.push(token);
     const updateOps = {
         updatedAt: Date.now(),
         state: "dead",
     };
-    ArrayPlusDelay(expireToken, (token) => Tokens.update({token}, {$set: updateOps}).exec(), ms(expiresIn));
+    ArrayPlusDelay(token, (token) => Tokens.update({token}, {$set: updateOps}).exec(), ms(expiresIn));
 };
