@@ -1,6 +1,14 @@
 const Tokens = require("../models/tokens");
 const ms = require("ms");
 
+/** Set interval every login to auto-update to dead when expiring date
+ *
+ * @param array the token
+ * @param delegate update function to update token to dead
+ * @param delay expires in token
+ * @returns {number}
+ * @constructor
+ */
 function ArrayPlusDelay(array, delegate, delay) {
     let i = 0;
 
@@ -27,7 +35,5 @@ module.exports = ({req, token, expiresIn}) => {
         updatedAt: Date.now(),
         state: "dead",
     };
-    ArrayPlusDelay(expireToken, (token) => {
-        Tokens.update({token}, {$set: updateOps}).exec()
-    }, ms(expiresIn));
+    ArrayPlusDelay(expireToken, (token) => Tokens.update({token}, {$set: updateOps}).exec(), ms(expiresIn));
 };
