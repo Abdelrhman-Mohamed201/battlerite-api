@@ -1,17 +1,3 @@
-component_depth: 1
+component_depth: 5
 languages:
 - javascript
-
-- name: javascript
-  production:
-    include:
-      - .*/config/.*\.js
-      - .*/controllers/.*\.js
-      - .*/middleware/.*\.js
-      - .*/models/.*\.js
-      - .*/routes/.*\.js
-      - .*/services/.*\.js
-      - /app.js
-  test:
-    include:
-#      - .*/test/.*\.js
