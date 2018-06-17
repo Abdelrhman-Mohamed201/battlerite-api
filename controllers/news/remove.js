@@ -1,5 +1,6 @@
 const fs = require("fs");
 require("dotenv").config();
+const handler = require("../../services/handler");
 const News = require("../../models/news");
 const Images = require("../../models/images");
 
@@ -26,13 +27,15 @@ module.exports = (req, res) => {
                                     });
                                 } else {
                                     /** Remove the image file **/
-                                    fs.unlinkSync(`uploads/news/${docsImgId.imgId}.jpg`, (err) => {
-                                        if (err) handler({
-                                            req, res,
-                                            error: err,
-                                            status: 500,
-                                            kind: "Image not found."
-                                        });
+                                    fs.unlinkSync(`${process.env.UPLOAD_IMAGES_NEWS}/${docsImgId.imgId}.jpg`, (err) => {
+                                        if (err) {
+                                            handler({
+                                                req, res,
+                                                error: err,
+                                                status: 500,
+                                                kind: "Image not found."
+                                            });
+                                        }
                                     });
                                     /** End:Remove the image file **/
                                     const reponse = {

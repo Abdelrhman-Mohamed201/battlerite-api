@@ -6,7 +6,7 @@ module.exports = ({req, res, status, kind, error}) => {
         _id: mongoose.Types.ObjectId(),
         url: req.originalUrl,
         method: req.method,
-        status: status,
+        status,
         name: error ? error.name : null,
         message: error ? error.message : null,
         token: req.headers.authorization ? req.headers.authorization.split(" ")[1] : null,
@@ -15,7 +15,7 @@ module.exports = ({req, res, status, kind, error}) => {
         .then(docs => {
             return res.status(docs.status).json({
                 status: docs.status,
-                kind: kind,
+                kind,
                 ...error
             })
         })
