@@ -47,7 +47,7 @@ module.exports = (req, res) => {
                                 token,
                             }
                         };
-                        res.status(response.status).json(response);
+                        return res.status(response.status).json(response);
                     }
                     handler({
                         req, res,

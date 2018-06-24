@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.18.0",
     "bcrypt": "^2.0.1",
     "body-parser": "^1.18.3",
     "dotenv": "^6.0.0",
@@ -16,7 +17,8 @@
     "morgan": "^1.9.0"
   },
   "scripts": {
-    "start": "nodemon server"
+    "dbpath": "mongod --dbpath=D:/Work/mongodb",
+    "start": "npm run dbpath | nodemon server"
   },
   "keywords": [],
   "author": "Abdelrhman Mohamed",
