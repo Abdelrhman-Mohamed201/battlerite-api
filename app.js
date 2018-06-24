@@ -2,14 +2,16 @@ const express = require("express");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+require("dotenv").config();
 
 const usersRouters = require("./routes/users");
 const newsRouters = require("./routes/news");
 const imagesRouters = require("./routes/images");
 const buildsRouters = require("./routes/builds");
 const championsRouters = require("./routes/champions");
+const searchRouters = require("./routes/search");
 
-mongoose.connect("mongodb://localhost/battlerite");
+mongoose.connect(process.env.DB_CONNECT);
 mongoose.Promise = global.Promise;
 
 const app = express();
@@ -38,6 +40,7 @@ app.use('/news', newsRouters);
 app.use('/images', imagesRouters);
 app.use('/builds', buildsRouters);
 app.use('/champions', championsRouters);
+app.use('/search', searchRouters);
 
 // Handle wrong routes
 app.use((req, res, next) => {
