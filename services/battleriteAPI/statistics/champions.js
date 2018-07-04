@@ -1,5 +1,5 @@
-const stackables = require("../../../services/battlerite-assets/mappings/45166/stackables");
-const champion = require("./championClass");
+const stackables = require("../mappings/45166/stackables");
+const Champion = require("./championClass");
 
 const championsArr = [
     {"id": "01", "type": "support"},
@@ -37,7 +37,7 @@ module.exports = stats => {
         let obj = stackables.Mappings.filter(obj => {
             return obj.StackableId === parseInt(`100${champ.id}`);
         })[0];
-        champions.push(new champion({obj, id: champ.id, stats}));
+        champions.push(new Champion({obj, id: champ.id, stats}));
     });
     champions = champions.sort((a, b) => b.level - a.level);
     return champions;

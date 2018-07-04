@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 
 const newsSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    author: {type: mongoose.Schema.Types.ObjectId, ref: 'Users', required: true},
+    author: {type: mongoose.Schema.Types.ObjectId, ref: 'users', required: true},
     imgPath: {type: String, required: true},
-    imgId: mongoose.Schema.Types.ObjectId,
+    imgId: {type: mongoose.Schema.Types.ObjectId, ref: 'images', required: true},
     premalink: {type: String, required: true},
     subTitle: {type: String, required: true},
     content: {type: String, required: true},

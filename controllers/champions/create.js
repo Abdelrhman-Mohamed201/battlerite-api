@@ -12,18 +12,14 @@ module.exports = (req, res) => {
                 _id: mongoose.Types.ObjectId(),
                 author: token.userId,
                 ...req.body,
+                premalink: req.body.name.toLowerCase().replace(/\s/g, "")
             });
             champion
                 .save()
-                .then(docs => {
+                .then(champion => {
                     const response = {
                         status: 201,
-                        message: "Created champion successfully.",
-                        collection: docs,
-                        request: {
-                            type: "GET",
-                            url: `${process.env.URL}/champions/g/${docs._id}`
-                        }
+                        message: "Created champion successfully."
                     };
                     res.status(response.status).json(response);
                 })
@@ -32,7 +28,7 @@ module.exports = (req, res) => {
                         req, res,
                         error: err,
                         status: 500,
-                        kind: "Can't save the champion."
+                        message: "Can't save the champion."
                     });
                 });
         })
@@ -41,7 +37,7 @@ module.exports = (req, res) => {
                 req, res,
                 error: err,
                 status: 500,
-                kind: "Can't find the user id."
+                message: "Can't find the user id."
             });
         });
 };

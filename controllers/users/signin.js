@@ -14,7 +14,7 @@ module.exports = (req, res) => {
                 handler({
                     req, res,
                     status: 409,
-                    kind: "Please check your email."
+                    message: "Please check your email."
                 });
             } else {
                 Users.update({_id: user._id}, {$set: {lastLoginAt: Date.now()}}).exec();
@@ -32,8 +32,7 @@ module.exports = (req, res) => {
                         const expiresIn = process.env.EXPIRES_IN;
 
                         // Generate a token
-                        const token = jwt.sign({userData},
-                            process.env.JWT_KEY, {expiresIn});
+                        const token = jwt.sign({userData}, process.env.JWT_KEY, {expiresIn});
 
                         createToken({req, res, userId: user._id, token, expiresIn});
 
@@ -53,7 +52,7 @@ module.exports = (req, res) => {
                         req, res,
                         error: err,
                         status: 401,
-                        kind: "Auth failed."
+                        message: "Check your password."
                     });
                 })
             }
@@ -63,7 +62,7 @@ module.exports = (req, res) => {
                 req, res,
                 error: err,
                 status: 500,
-                kind: "Can't find the user."
+                message: "Can't find the user."
             });
         })
 };

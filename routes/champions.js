@@ -8,10 +8,10 @@ router.get("/g", controller.getAll);
 
 router.post("/p", checkAuth, controller.create);
 
-router.get("/g/:championId", controller.getById);
+router.get("/g/:premalink", controller.getById);
 
-router.patch("/u/:championId", checkAuth, controller.update);
+router.patch("/u/:premalink", checkAuth, controller.update);
 
-router.delete("/d/:championId", checkAuth, controller.remove);
+router.delete("/d/:premalink", checkAuth, controller.remove);
 
 module.exports = router;

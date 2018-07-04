@@ -9,7 +9,8 @@ const newsRouters = require("./routes/news");
 const imagesRouters = require("./routes/images");
 const buildsRouters = require("./routes/builds");
 const championsRouters = require("./routes/champions");
-const searchRouters = require("./routes/search");
+const playersRouters = require("./routes/players");
+const teamsRouters = require("./routes/teams");
 
 mongoose.connect(process.env.DB_CONNECT);
 mongoose.Promise = global.Promise;
@@ -26,11 +27,11 @@ app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers",
         "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-
-    if (res.method === "OPTIONS") {
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
+    /*if (res.method === "OPTIONS") {
         res.header("Access-Control-Allow-Methods', 'PUT, PATCH, POST, GET, DELETE");
         return res.status(200).json({})
-    }
+    }*/
     next()
 });
 
@@ -40,7 +41,9 @@ app.use('/news', newsRouters);
 app.use('/images', imagesRouters);
 app.use('/builds', buildsRouters);
 app.use('/champions', championsRouters);
-app.use('/search', searchRouters);
+app.use('/players', playersRouters);
+app.use('/teams', teamsRouters);
+app.use('/teams', teamsRouters);
 
 // Handle wrong routes
 app.use((req, res, next) => {

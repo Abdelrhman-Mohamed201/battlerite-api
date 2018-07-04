@@ -10,7 +10,7 @@ const usersSchema = mongoose.Schema({
         match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
     },
     password: {type: String, required: true},
-    role: {type: String, required: true},
+    role: {type: String, default: "user"},
     lastLoginAt: {type: Date},
 }, {collection: "users", timestamps: true, versionKey: false}); // versionKey: for remove the __v from collection
 

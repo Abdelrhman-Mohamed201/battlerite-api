@@ -3,17 +3,15 @@ const handler = require("../../services/handler");
 const Champions = require("../../models/champions");
 
 module.exports = (req, res) => {
-    const id = req.params.championId;
     const updateOps = {updatedAt: Date.now(), ...req.body};
-    Champions.update({_id: id}, {$set: updateOps}).exec()
-        .then(docs => {
+    if(req.body.name){
+        updateOps.premalink = req.body.name.toLowerCase().replace(/\s/g, "")
+    }
+    Champions.update({premalink: req.params.premalink}, {$set: updateOps}).exec()
+        .then(champion => {
             const reponse = {
                 status: 200,
-                message: "Champion updated.",
-                request: {
-                    type: "GET",
-                    url: `${process.env.URL}/champions/g/${id}`
-                }
+                message: "Champion updated."
             };
             res.status(reponse.status).json(reponse);
         })
@@ -22,7 +20,7 @@ module.exports = (req, res) => {
                 req, res,
                 error: err,
                 status: 500,
-                kind: "Can't find the champion."
+                message: "Can't find the champion."
             });
         })
 };
