@@ -1,4 +1,4 @@
-const funcs = require("../../../services/functions");
+const funcs = require("../functions");
 
 module.exports = function Champion({obj, id, stats}) {
     this.id = parseInt(id);

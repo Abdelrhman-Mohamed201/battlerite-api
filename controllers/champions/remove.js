@@ -3,22 +3,18 @@ const handler = require("../../services/handler");
 const Champions = require("../../models/champions");
 
 module.exports = (req, res) => {
-    Champions.remove({_id: req.params.championId}).exec()
-        .then(docs => {
-            if (!docs.n) {
+    Champions.remove({premalink: req.params.premalink}).exec()
+        .then(champion => {
+            if (!champion.n) {
                 handler({
                     req, res,
                     status: 404,
-                    kind: "Champion not found."
+                    message: "Champion not found."
                 });
             } else {
                 const reponse = {
                     status: 200,
-                    message: "Champion deleted.",
-                    request: {
-                        type: "GET",
-                        url: `${process.env.URL}/champions/g`
-                    }
+                    message: "Champion deleted."
                 };
                 res.status(reponse.status).json(reponse);
             }
@@ -28,7 +24,7 @@ module.exports = (req, res) => {
                 req, res,
                 error: err,
                 status: 500,
-                kind: "Can't find the champion."
+                message: "Can't find the champion."
             });
         })
 };

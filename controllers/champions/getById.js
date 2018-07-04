@@ -3,16 +3,11 @@ const handler = require("../../services/handler");
 const Champions = require("../../models/champions");
 
 module.exports = (req, res) => {
-    Champions.findById(req.params.championId).exec()
+    Champions.findOne({premalink:req.params.premalink}).exec()
         .then(champion => {
             const response = {
                 status: 200,
-                collection: champion,
-                request: {
-                    type: "GET",
-                    description: "Get all champions",
-                    url: `${process.env.URL}/champions/g`
-                }
+                collection: champion
             };
             res.status(response.status).json(response);
         })
@@ -21,7 +16,7 @@ module.exports = (req, res) => {
                 req, res,
                 error: err,
                 status: 500,
-                kind: "Can't find the champion."
+                message: "Can't find the champion."
             });
         });
 };

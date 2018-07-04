@@ -4,19 +4,11 @@ const handler = require("../../services/handler");
 
 module.exports = (req, res) => {
     Champions.find().exec()
-        .then(docs => {
+        .then(champions => {
             const response = {
                 status: 200,
-                count: docs.length,
-                ...docs.map(champion => {
-                    return {
-                        collection: champion,
-                        request: {
-                            type: "GET",
-                            url: `${process.env.URL}/champions/g/${champion._id}`
-                        }
-                    }
-                })
+                count: champions.length,
+                collection: champions.map(champion => champion)
             };
             res.status(response.status).json(response);
         })
@@ -25,7 +17,7 @@ module.exports = (req, res) => {
                 req, res,
                 error: err,
                 status: 500,
-                kind: "Can't find the champions."
+                message: "Can't find the champions."
             });
         });
 };

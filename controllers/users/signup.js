@@ -11,7 +11,7 @@ module.exports = (req, res) => {
                 handler({
                     req, res,
                     status: 409,
-                    kind: "This email is exist, please enter another one."
+                    message: "This email is exist, please enter another one."
                 });
             } else {
 
@@ -21,8 +21,8 @@ module.exports = (req, res) => {
                         handler({
                             req, res,
                             error: err,
-                            status: 500,
-                            kind: "Error on your password."
+                            status: 401,
+                            message: "Error on your password."
                         });
                     } else {
                         const user = new Users({
@@ -30,7 +30,6 @@ module.exports = (req, res) => {
                             name: req.body.name,
                             email: req.body.email,
                             password: hash,
-                            role: req.body.role,
                             lastLoginAt: null,
                         });
                         user
@@ -39,11 +38,7 @@ module.exports = (req, res) => {
                                 const response = {
                                     status: 201,
                                     message: "Created user successfully.",
-                                    collection: docs,
-                                    request: {
-                                        type: "GET",
-                                        url: `${process.env.URL}/users/g/${docs._id}`
-                                    }
+                                    collection: docs
                                 };
                                 res.status(response.status).json(response)
                             })
