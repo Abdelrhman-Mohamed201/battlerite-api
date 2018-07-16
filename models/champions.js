@@ -9,6 +9,9 @@ const championsSchema = mongoose.Schema({
     name: {type: String, required: true},
     slogan: {type: String, required: true},
     type: {type: String, required: true},
+    icon: {type: String, required: true},
+    video: {type: String, required: true},
+    avatar: {type: String, required: true},
     pros: {type: Array},
     cons: {type: Array},
     basicGuide: {type: Array},
@@ -17,7 +20,7 @@ const championsSchema = mongoose.Schema({
     combos: {type: Array},
     spells: {type: Array, required: true},
     battlerites: {type: Array, required: true},
-    quote: {type: Array},
+    quotes: {type: Array},
 }, {collection: "champions", timestamps: true, versionKey: false}); // versionKey: for remove the __v from collection
 
 module.exports = mongoose.model("Champions", championsSchema);
