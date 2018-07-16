@@ -11,6 +11,7 @@ const buildsRouters = require("./routes/builds");
 const championsRouters = require("./routes/champions");
 const playersRouters = require("./routes/players");
 const teamsRouters = require("./routes/teams");
+const uploadFileRouters = require("./routes/uploadFile");
 
 mongoose.connect(process.env.DB_CONNECT);
 mongoose.Promise = global.Promise;
@@ -43,7 +44,7 @@ app.use('/builds', buildsRouters);
 app.use('/champions', championsRouters);
 app.use('/players', playersRouters);
 app.use('/teams', teamsRouters);
-app.use('/teams', teamsRouters);
+app.use('/upload', uploadFileRouters);
 
 // Handle wrong routes
 app.use((req, res, next) => {
